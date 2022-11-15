@@ -40,20 +40,10 @@ export class App extends Component {
   }
 
   onSubmit = searchbarValue => {
-    this.setState({ searchbarValue: searchbarValue });
+    this.setState({ searchbarValue: searchbarValue, searchResults: [], page: 1 });
   };
   loadMore = () => {
     this.setState({ page: this.state.page + 1 });
-  };
-  renderButton = () => {
-    this.setState({ buttonNeedRender: true });
-    console.log('renderButton');
-    console.log('buttonNeedRender:  ', this.state.buttonNeedRender);
-  };
-  unRenderButton = () => {
-    this.setState({ buttonNeedRender: false });
-    console.log('unRenderButton');
-    console.log('buttonNeedRender:  ', this.state.buttonNeedRender);
   };
 
   render() {
@@ -67,7 +57,7 @@ export class App extends Component {
           searchResults={searchResults}
           status={status}
         />
-        {buttonNeedRender ? <Button loadMore={loadMore} /> : <Fragment />}
+        {buttonNeedRender && <Button loadMore={loadMore} /> }
       </Fragment>
     );
   }
