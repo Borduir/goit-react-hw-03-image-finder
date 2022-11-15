@@ -26,12 +26,26 @@ export class App extends Component {
         .then(response => response.json())
         .then(response => {
           if (response.hits.length) {
-            this.setState({
-              searchResults: [...prevState.searchResults, ...response.hits],
-              buttonNeedRender: true,
-            });
+            //ДОДАТКОВА ПЕРЕВІРКА НА ТЕ, ЧИ ЦЕ НОВИЙ ПОШУКОВИЙ ЗАПИТ
+            ///////////////////////////////////////////////////////////////////////////////////
+            if (prevState.searchbarValue !== searchbarValue && page === 1) {
+              this.setState({
+                searchResults: [...response.hits],
+                buttonNeedRender: true,
+              });
+            } else {
+              this.setState({
+                searchResults: [...prevState.searchResults, ...response.hits],
+                buttonNeedRender: true,
+              });
+            }
+            ///////////////////////////////////////////////////////////////////////////////////
           } else {
-            this.setState({searchResults: [], buttonNeedRender: false })
+            this.setState({
+              searchResults: [],
+              buttonNeedRender: false,
+              page: 1,
+            });
             alert('no hits found');
           }
         })
@@ -40,14 +54,19 @@ export class App extends Component {
   }
 
   onSubmit = searchbarValue => {
-    this.setState({ searchbarValue: searchbarValue, searchResults: [], page: 1 });
+    this.setState({
+      searchbarValue: searchbarValue,
+      searchResults: [],
+      page: 1,
+    });
   };
   loadMore = () => {
     this.setState({ page: this.state.page + 1 });
   };
 
   render() {
-    const { searchbarValue, buttonNeedRender, status, searchResults } = this.state;
+    const { searchbarValue, buttonNeedRender, status, searchResults } =
+      this.state;
     const { onSubmit, loadMore } = this;
     return (
       <Fragment>
@@ -57,7 +76,7 @@ export class App extends Component {
           searchResults={searchResults}
           status={status}
         />
-        {buttonNeedRender && <Button loadMore={loadMore} /> }
+        {buttonNeedRender && <Button loadMore={loadMore} />}
       </Fragment>
     );
   }
