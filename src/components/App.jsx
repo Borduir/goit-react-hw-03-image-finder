@@ -31,11 +31,6 @@ export class App extends Component {
               buttonNeedRender: true,
             });
           } else {
-            this.setState({
-              searchResults: [],
-              buttonNeedRender: false,
-              page: 1,
-            });
             alert('no hits found');
           }
         })
