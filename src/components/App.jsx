@@ -26,15 +26,10 @@ export class App extends Component {
         .then(response => response.json())
         .then(response => {
           if (response.hits.length) {
-            //ДОДАТКОВА ПЕРЕВІРКА НА ТЕ, ЧИ ЦЕ НОВИЙ ПОШУКОВИЙ ЗАПИТ
-            ///////////////////////////////////////////////////////////////////////////////////
-
             this.setState({
               searchResults: [...searchResults, ...response.hits],
               buttonNeedRender: true,
             });
-
-            ///////////////////////////////////////////////////////////////////////////////////
           } else {
             this.setState({
               searchResults: [],
