@@ -31,6 +31,9 @@ export class App extends Component {
               buttonNeedRender: true,
             });
           } else {
+            this.setState({
+              buttonNeedRender: false,
+            });
             alert('no hits found');
           }
         })
