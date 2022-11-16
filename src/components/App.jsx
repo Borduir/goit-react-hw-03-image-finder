@@ -14,7 +14,7 @@ export class App extends Component {
   };
 
   componentDidUpdate(_, prevState) {
-    const { searchbarValue, page } = this.state;
+    const { searchbarValue, page, searchResults } = this.state;
     if (
       prevState.searchbarValue !== searchbarValue ||
       prevState.page !== page
@@ -28,17 +28,12 @@ export class App extends Component {
           if (response.hits.length) {
             //ДОДАТКОВА ПЕРЕВІРКА НА ТЕ, ЧИ ЦЕ НОВИЙ ПОШУКОВИЙ ЗАПИТ
             ///////////////////////////////////////////////////////////////////////////////////
-            if (prevState.searchbarValue !== searchbarValue && page === 1) {
-              this.setState({
-                searchResults: [...response.hits],
-                buttonNeedRender: true,
-              });
-            } else {
-              this.setState({
-                searchResults: [...prevState.searchResults, ...response.hits],
-                buttonNeedRender: true,
-              });
-            }
+
+            this.setState({
+              searchResults: [...searchResults, ...response.hits],
+              buttonNeedRender: true,
+            });
+
             ///////////////////////////////////////////////////////////////////////////////////
           } else {
             this.setState({
